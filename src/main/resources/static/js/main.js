@@ -247,6 +247,18 @@ $(function(){
         return false;
     });
 
+    $('#btn_press').click(function(){
+        $.get('/',function(response)
+        {
+        var a = response[0];
+        var b = response[1];
+        var c = response[2];
+        var x = response[3];
+        $(document.querySelector())
+        }
+        )
+    });
+
     //показать все дела
     $('#show-all-todo').click(function()
     {
