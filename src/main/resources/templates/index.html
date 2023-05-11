@@ -9,17 +9,25 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-    <div class="equation_body">
+    <section class="equation_body">
         <form class="equation_main">
            <h2>Реши уравнение:</h2>
-            <br>
            <h2>a+b*x=c</h2>
-            <h2>x= <input type="number" min="-100" max="100" name="meaning" value="" size="10%" id="meaning"></h2>
+            <br>
+            <h2>x= <input type="number" min="-100" max="100" name="meaning" value="" size="15%" id="meaning" autofocus="true"></h2>
         </form>
-        <div id="eduation_techno">
-
-        </div>
-    </div>
+        <form class="equation_upr">
+            <h2>Время</h2>
+            <h2>
+                <div class="result">
+                    <div>Верно</div>
+                    <div class="green_text">0</div>
+                    <div>Не верно</div>
+                    <div class="red_text">0</div>
+                </div></h2>
+            <button type="submit" class="button"><h2>Старт/стоп</h2></button>
+        </form>
+    </section>
     <!--
     <div id="task-form">
         <form>
