@@ -1,5 +1,53 @@
 $(function(){
+console.log('Результат операции');
 
+    $('#btn_press').click(function(){
+    $.ajax({//запрос на сервер
+        method: "GET",//метод запроса
+        url: '/vars/',//адрес на который идет запрос
+        success: function(response)//если запрос успешен
+            {
+                      //alert("Привет мир");
+                      console.log('отработка нажатия кнопки');
+                    var a = response[0];
+                    var b = response[1];
+                    var c = response[2];
+                    var x = response[3];
+                    console.log(x);
+                    console.log(response);
+                    var stroka ="";
+                    var znak;
+                    if (a > 0) {
+                    //console.log("a>0");
+                    if (b*x>=0) {
+                        znak = "+";
+                        //console.log(znak);
+                    } else {
+                        znak = "-";
+                        //console.log(znak);
+                    }
+                    stroka = stroka.concat(a, znak, Math.abs(b), "*", "x", "=", c);
+                    } else {stroka = stroka.concat(b, "*", "x", a, "=", c);};
+                    console.log(stroka);
+                    document.getElementById('abxc').textContent = stroka;
+                    //$(document.getElementById('abxc')).color = red;
+            //taskcount = response;//функция на сервере возвращает размер map-ы task-ов
+            //из document берется элемент с аттрибутом-значением id="count" и его текст приравнивается к переменной
+            //(document.querySelector('[id="count"]')).innerText = taskcount;
+
+            };
+        });
+
+
+//        $.get('/',function(response)
+//        {
+//
+//        }
+//        )
+        return false;
+    });
+
+/*
     const appendTask = function(data){//функция добавления строки-задачи в div-список задач
         var taskCode = '<input type="checkbox" name="check" value="" id="' + data.id + 'check">' + ' ' +
         '<a href="#" class="task-link" data-id="' +
@@ -44,7 +92,7 @@ $(function(){
             appendTask(response[i]);
         }
     });*/
-
+/*
     //показ формы добавления по нажатию кнопки Добавить
     $('#show-add-todo-form').click(function(){//функция по нажатию на кнопку с идент-ром show-add-todo-form
         $('#task-form').css('display', 'flex');//показ формы
@@ -246,19 +294,9 @@ $(function(){
         getCount();//обновляем на странице количество задач и активность кнопок
         return false;
     });
+*/
 
-    $('#btn_press').click(function(){
-        $.get('/',function(response)
-        {
-        var a = response[0];
-        var b = response[1];
-        var c = response[2];
-        var x = response[3];
-        $(document.querySelector())
-        }
-        )
-    });
-
+/*
     //показать все дела
     $('#show-all-todo').click(function()
     {
@@ -277,5 +315,5 @@ $(function(){
             });
     });
 
-
+*/
 });
