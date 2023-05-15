@@ -115,4 +115,11 @@ background-color:WhiteSmoke
     /*height:100%;*/
     border-radius:10%;
     cursor:pointer;
+    margin: 0 auto;
+    display: block;
+}
+
+.timer{
+  display: flex;
+  /*font-size: 48px;*/
 }

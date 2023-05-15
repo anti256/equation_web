@@ -2,6 +2,10 @@ $(function(){
 console.log('Результат операции');
 
     $('#btn_press').click(function(){
+    if (this.textContent == "Старт"){
+    //this.classList.add("equation_upr");
+    //this.classList.add("equation_body");
+    document.getElementById('btn_press_id').textContent = "Стоп";
     $.ajax({//запрос на сервер
         method: "GET",//метод запроса
         url: '/vars/',//адрес на который идет запрос
@@ -35,16 +39,14 @@ console.log('Результат операции');
             //из document берется элемент с аттрибутом-значением id="count" и его текст приравнивается к переменной
             //(document.querySelector('[id="count"]')).innerText = taskcount;
 
-            };
+            },
         });
-
-
-//        $.get('/',function(response)
-//        {
-//
-//        }
-//        )
-        return false;
+        return false;//чтоб страница не перезагружалась
+        } else {
+        document.getElementById('btn_press_id').textContent = "Старт";
+        document.getElementById('abxc').textContent = "a+b*x=c";
+        return false;//чтоб страница не перезагружалась
+        }
     });
 
 /*

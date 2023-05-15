@@ -8,7 +8,7 @@
     <!--
     <script type="text/javascript" th:inline="none"></script>
     -->
-    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
 </head>
 <body>
     <section class="equation_body">
@@ -19,7 +19,14 @@
             <h2>x= <input type="number" min="-100" max="100" name="meaning" value="" size="15%" id="meaning" autofocus="true"></h2>
         </form>
         <form class="equation_upr">
-            <h2>Время</h2>
+            <div class="timer">
+                <h2>Время</h2>
+                <div class="timer__minutes">00</div>
+                <div class="timer__seconds">00</div>
+            </div>
+<!--
+https://itchief.ru/javascript/countdown-timer
+-->
             <h2>
                 <div class="result">
                     <div>Верно</div>
@@ -27,7 +34,7 @@
                     <div>Не верно</div>
                     <div class="red_text">0</div>
                 </div></h2>
-            <button class="button" id="btn_press"><h2>Старт/стоп</h2></button>
+            <button class="button" id="btn_press"><h2 id="btn_press_id">Старт</h2></button>
         </form>
     </section>
     <!--
