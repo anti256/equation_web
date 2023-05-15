@@ -13,6 +13,8 @@ console.log('Результат операции');
             {
                       //alert("Привет мир");
                       console.log('отработка нажатия кнопки');
+                    display = document.querySelector('#time');
+                    startTimer(120, display);
                     var a = response[0];
                     var b = response[1];
                     var c = response[2];
@@ -48,6 +50,24 @@ console.log('Результат операции');
         return false;//чтоб страница не перезагружалась
         }
     });
+
+
+function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = duration;
+        }
+    }, 1000);
+}
 
 /*
     const appendTask = function(data){//функция добавления строки-задачи в div-список задач
