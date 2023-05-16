@@ -16,7 +16,8 @@
            <h2>Реши уравнение:</h2>
            <h2 id="abxc">a+b*x=c</h2>
             <br>
-            <h2>x= <input type="number" min="-100" max="100" name="meaning" value="" size="15%" id="meaning" autofocus="true"></h2>
+            <h2>x= <input type="number" min="-100" max="100" name="meaning" value="" size="15%" id="meaning"
+                          autofocus="true" disabled ></h2>
         </form>
         <form class="equation_upr">
             <div class="timer">
@@ -29,9 +30,9 @@ https://itchief.ru/javascript/countdown-timer
             <h2>
                 <div class="result">
                     <div>Верно</div>
-                    <div class="green_text">0</div>
+                    <div class="green_text" id="true_count">0</div>
                     <div>Не верно</div>
-                    <div class="red_text">0</div>
+                    <div class="red_text" id="false_count">0</div>
                 </div></h2>
             <button class="button" id="btn_press"><h2 id="btn_press_id">Старт</h2></button>
         </form>

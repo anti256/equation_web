@@ -1,52 +1,71 @@
 $(function(){
 console.log('Результат операции');
 
+    var a, b, c, x;
+    var trueCount=0, falseCount=0;
+
+    const getVars = function(){
+        $.ajax({//запрос на сервер
+            method: "GET",//метод запроса
+            url: '/vars/',//адрес на который идет запрос
+            success: function(response)//если запрос успешен
+                {
+                        console.log('отработка нажатия кнопки');
+                        display = document.querySelector('#time');
+                        startTimer(120, display);
+                        a = response[0];
+                        b = response[1];
+                        c = response[2];
+                        x = response[3];
+                        console.log(x);
+                        console.log(response);
+                        var stroka ="";
+                        var znak;
+                        if (a > 0) {
+                        //console.log("a>0");
+                        if (b*x>=0) {
+                            znak = "+";
+                            //console.log(znak);
+                        } else {
+                            znak = "-";
+                            //console.log(znak);
+                        }
+                        stroka = stroka.concat(a, znak, Math.abs(b), "*", "x", "=", c);
+                        } else {stroka = stroka.concat(b, "*", "x", a, "=", c);};
+                        console.log(stroka);
+                        document.getElementById('abxc').textContent = stroka;
+                },
+            });
+    }
+
+    document.querySelector('#meaning').addEventListener('keydown', function(e){
+        //var sends;
+        if (e.keyCode === 13) {
+        var result = document.getElementById('meaning').value;
+        if (result == x){
+            alert("Верно!");
+            trueCount = trueCount+1;
+            document.getElementById('true_count').textContent = trueCount;
+        } else {
+            alert = confirm("Не верно!");
+            falseCount = falseCount+1;
+            document.getElementById('false_count').textContent = falseCount;
+        }
+        getVars();
+        event.preventDefault();//чтоб страница не перезагружалась
+        }
+    });
+
     $('#btn_press').click(function(){
     if (this.textContent == "Старт"){
-    //this.classList.add("equation_upr");
-    //this.classList.add("equation_body");
     document.getElementById('btn_press_id').textContent = "Стоп";
-    $.ajax({//запрос на сервер
-        method: "GET",//метод запроса
-        url: '/vars/',//адрес на который идет запрос
-        success: function(response)//если запрос успешен
-            {
-                      //alert("Привет мир");
-                      console.log('отработка нажатия кнопки');
-                    display = document.querySelector('#time');
-                    startTimer(120, display);
-                    var a = response[0];
-                    var b = response[1];
-                    var c = response[2];
-                    var x = response[3];
-                    console.log(x);
-                    console.log(response);
-                    var stroka ="";
-                    var znak;
-                    if (a > 0) {
-                    //console.log("a>0");
-                    if (b*x>=0) {
-                        znak = "+";
-                        //console.log(znak);
-                    } else {
-                        znak = "-";
-                        //console.log(znak);
-                    }
-                    stroka = stroka.concat(a, znak, Math.abs(b), "*", "x", "=", c);
-                    } else {stroka = stroka.concat(b, "*", "x", a, "=", c);};
-                    console.log(stroka);
-                    document.getElementById('abxc').textContent = stroka;
-                    //$(document.getElementById('abxc')).color = red;
-            //taskcount = response;//функция на сервере возвращает размер map-ы task-ов
-            //из document берется элемент с аттрибутом-значением id="count" и его текст приравнивается к переменной
-            //(document.querySelector('[id="count"]')).innerText = taskcount;
-
-            },
-        });
+    document.getElementById('meaning').disabled=false;
+        getVars();
         return false;//чтоб страница не перезагружалась
         } else {
         document.getElementById('btn_press_id').textContent = "Старт";
         document.getElementById('abxc').textContent = "a+b*x=c";
+        document.getElementById('meaning').disabled=true;
         return false;//чтоб страница не перезагружалась
         }
     });
