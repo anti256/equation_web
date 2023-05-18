@@ -123,3 +123,7 @@ background-color:WhiteSmoke
   display: flex;
   /*font-size: 48px;*/
 }
+
+.input_result{
+    display: flex;
+}

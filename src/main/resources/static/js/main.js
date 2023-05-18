@@ -1,10 +1,9 @@
 $(function(){
-console.log('Результат операции');
 
     var a, b, c, x;
     var trueCount=0, falseCount=0;
 
-    const getVars = function(){
+    const getVars = function(){//функция запроса с сервера новых значений переменных уравнения
         $.ajax({//запрос на сервер
             method: "GET",//метод запроса
             url: '/vars/',//адрес на который идет запрос
@@ -25,10 +24,8 @@ console.log('Результат операции');
                         //console.log("a>0");
                         if (b*x>=0) {
                             znak = "+";
-                            //console.log(znak);
                         } else {
                             znak = "-";
-                            //console.log(znak);
                         }
                         stroka = stroka.concat(a, znak, Math.abs(b), "*", "x", "=", c);
                         } else {stroka = stroka.concat(b, "*", "x", a, "=", c);};
@@ -38,8 +35,8 @@ console.log('Результат операции');
             });
     }
 
+    //нажатие enter в поле input
     document.querySelector('#meaning').addEventListener('keydown', function(e){
-        //var sends;
         if (e.keyCode === 13) {
         var result = document.getElementById('meaning').value;
         if (result == x){
@@ -51,22 +48,24 @@ console.log('Результат операции');
             falseCount = falseCount+1;
             document.getElementById('false_count').textContent = falseCount;
         }
+        document.getElementById('meaning').value="";//удаление значения из input
         getVars();
         event.preventDefault();//чтоб страница не перезагружалась
         }
     });
 
+    //нажатие кнопки "старт/стоп"
     $('#btn_press').click(function(){
     if (this.textContent == "Старт"){
-    document.getElementById('btn_press_id').textContent = "Стоп";
-    document.getElementById('meaning').disabled=false;
+        document.getElementById('btn_press_id').textContent = "Стоп";
+        document.getElementById('meaning').disabled=false;
         getVars();
         return false;//чтоб страница не перезагружалась
         } else {
-        document.getElementById('btn_press_id').textContent = "Старт";
-        document.getElementById('abxc').textContent = "a+b*x=c";
-        document.getElementById('meaning').disabled=true;
-        return false;//чтоб страница не перезагружалась
+            document.getElementById('btn_press_id').textContent = "Старт";
+            document.getElementById('abxc').textContent = "a+b*x=c";
+            document.getElementById('meaning').disabled=true;
+            return false;//чтоб страница не перезагружалась
         }
     });
 
