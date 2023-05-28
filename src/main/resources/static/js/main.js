@@ -3,6 +3,7 @@ $(function(){
     var a, b, c, x;
     var trueCount=0, falseCount=0;
     var started = false;
+    var end;//дата в милисекундах окончания цикла таймера - теряется где-то 1 сек, поэтому 121 сек
 
     const getVars = function(){//функция запроса с сервера новых значений переменных уравнения
         $.ajax({//запрос на сервер
@@ -41,16 +42,25 @@ $(function(){
         if (e.keyCode === 13) {
         var result = document.getElementById('meaning').value;
         if (result == x){
-            alert("Верно!");
+            document.getElementById('equation_main').style.backgroundColor = '#008000';
             trueCount = trueCount+1;
             document.getElementById('true_count').textContent = trueCount;
         } else {
-            alert = confirm("Не верно! Правильный ответ - " + x);
+            document.getElementById('equation_main').style.backgroundColor = '#800000';
             falseCount = falseCount+1;
             document.getElementById('false_count').textContent = falseCount;
         }
+        function sleep() {
+          const date = Date.now();
+          let currentDate = null;
+          do {
+            currentDate = Date.now();
+          } while (currentDate - date < 1000);
+        }
         document.getElementById('meaning').value="";//удаление значения из input
         getVars();
+        end = Date.now() + 121000;
+        document.getElementById('equation_main').style.backgroundColor = '';
         event.preventDefault();//чтоб страница не перезагружалась
         }
     });
@@ -74,7 +84,7 @@ $(function(){
 
 function startTimer() {
     if (started == false) {//проверка запущенности таймера
-    var end = Date.now() + 121000;//дата в милисекундах окончания цикла таймера - теряется где-то 1 сек, поэтому 121 сек
+    end = Date.now() + 121000;//дата в милисекундах окончания цикла таймера - теряется где-то 1 сек, поэтому 121 сек
     //setInterval - циклический запуск функции с периодом
     //передается в переменную, чтоб можно было остановить
     var countdown = setInterval(function () {
@@ -93,8 +103,12 @@ function startTimer() {
 
         //если время окончилось
         if (distance <= 0) {
-            clearInterval(countdown);//clearInterval останавливает циклический вызов функции в аргументе
-            started = false;//сбрасываем признак запущенности таймера
+            falseCount = falseCount+1;
+            document.getElementById('false_count').textContent = falseCount;
+            end = Date.now() + 121000;
+            getVars();
+            //clearInterval(countdown);//clearInterval останавливает циклический вызов функции в аргументе
+            //started = false;//сбрасываем признак запущенности таймера
         }
     }, 1000);//период циклического вывода функции
     started = true;}//устанавливаем, что таймер запущен
