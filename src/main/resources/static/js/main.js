@@ -4,8 +4,7 @@ $(function(){
     var trueCount=0, falseCount=0;//количество правильных/неправильных ответов
     var started = false;//флаг запуска таймера на решение
     var end;//дата в милисекундах окончания цикла таймера - теряется где-то 1 сек, поэтому 121 сек
-//    var countdown;
-    display = document.querySelector('#time');//привязка к элементу с id time - надпись-время на решение
+    var countdown;//переменная-таймер на решение
 
     const getVars = function(){//функция запроса с сервера новых значений переменных уравнения
         $.ajax({//запрос на сервер
@@ -13,37 +12,35 @@ $(function(){
             url: '/vars/',//адрес на который идет запрос
             success: function(response)//если запрос успешен
                 {
-                        console.log('отработка нажатия кнопки');
-                        //display = document.querySelector('#time');//привязка к элементу с id time - надпись на html
-                        startTimer();
+                        startTimer();//запуск таймера на решение
+                        //переменные уравнения с сервера
                         a = response[0];
                         b = response[1];
                         c = response[2];
                         x = response[3];
-                        console.log(x);
-                        console.log(response);
+                        //console.log(response);
                         var stroka ="";
                         var znak;
+                        //вычисление знака-строки b*x
                         if (a > 0) {
-                        //console.log("a>0");
                         if (b*x>=0) {
                             znak = "+";
                         } else {
                             znak = "-";
                         }
+                        //строка, выводимая, как задание
                         stroka = stroka.concat(a, znak, Math.abs(b), "*", "x", "=", c);
                         } else {stroka = stroka.concat(b, "*", "x", a, "=", c);};
-                        console.log(stroka);
-                        document.getElementById('abxc').textContent = stroka;
+                        document.getElementById('abxc').textContent = stroka;//вывод строки в html
                 },
             });
     }
 
     //нажатие enter в поле input
-    document.querySelector('#meaning').addEventListener('keydown', function(e){
-        if (e.keyCode === 13) {
-        var result = document.getElementById('meaning').value;
-        if (result == x){
+    document.querySelector('#meaning').addEventListener('keydown', function(e){//создание слушателя по нажатию клавишы
+        if (e.keyCode === 13) {//если нажат enter
+        var result = document.getElementById('meaning').value;//считывание введенного пользователем ответа
+        if (result == x){//если решение правильное
             document.getElementById('equation_main').style.backgroundColor = '#b1e9b0';
             trueCount = trueCount+1;
             document.getElementById('true_count').textContent = trueCount;
@@ -72,7 +69,8 @@ $(function(){
             document.getElementById('btn_press_id').textContent = "Старт";
             document.getElementById('abxc').textContent = "a+b*x=c";
             document.getElementById('meaning').disabled=true;
-            clearInterval(startTimer());
+            clearInterval(countdown);
+            started = false;
             return false;//чтоб страница не перезагружалась
         }
     });
@@ -96,7 +94,7 @@ function startTimer() {
     end = Date.now() + 121000;//дата в милисекундах окончания цикла таймера - теряется где-то 1 сек, поэтому 121 сек
     //setInterval - циклический запуск функции с периодом
     //передается в переменную, чтоб можно было остановить
-    var countdown = setInterval(function () {
+    countdown = setInterval(function () {
         var now = Date.now();//дата и время в миллисекундах сейчас
         var distance = Math.trunc((end - now) / 1000); //разница в секундах
         console.log(distance);
@@ -108,7 +106,7 @@ function startTimer() {
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
 
-        display.textContent = minutes + ":" + seconds;//вывод в надпись
+        document.querySelector('#time').textContent = minutes + ":" + seconds;//вывод в надпись
 
         //если время окончилось
         if (distance <= 0) {
