@@ -1,9 +1,11 @@
 $(function(){
 
-    var a, b, c, x;
-    var trueCount=0, falseCount=0;
-    var started = false;
+    var a, b, c, x;//коэффициенты уравнения
+    var trueCount=0, falseCount=0;//количество правильных/неправильных ответов
+    var started = false;//флаг запуска таймера на решение
     var end;//дата в милисекундах окончания цикла таймера - теряется где-то 1 сек, поэтому 121 сек
+//    var countdown;
+    display = document.querySelector('#time');//привязка к элементу с id time - надпись-время на решение
 
     const getVars = function(){//функция запроса с сервера новых значений переменных уравнения
         $.ajax({//запрос на сервер
@@ -12,7 +14,7 @@ $(function(){
             success: function(response)//если запрос успешен
                 {
                         console.log('отработка нажатия кнопки');
-                        display = document.querySelector('#time');//привязка к элементу с id time - надпись на html
+                        //display = document.querySelector('#time');//привязка к элементу с id time - надпись на html
                         startTimer();
                         a = response[0];
                         b = response[1];
@@ -42,25 +44,19 @@ $(function(){
         if (e.keyCode === 13) {
         var result = document.getElementById('meaning').value;
         if (result == x){
-            document.getElementById('equation_main').style.backgroundColor = '#008000';
+            document.getElementById('equation_main').style.backgroundColor = '#b1e9b0';
             trueCount = trueCount+1;
             document.getElementById('true_count').textContent = trueCount;
+            greenBlink();
         } else {
-            document.getElementById('equation_main').style.backgroundColor = '#800000';
+            document.getElementById('equation_main').style.backgroundColor = '#d32828';
             falseCount = falseCount+1;
             document.getElementById('false_count').textContent = falseCount;
-        }
-        function sleep() {
-          const date = Date.now();
-          let currentDate = null;
-          do {
-            currentDate = Date.now();
-          } while (currentDate - date < 1000);
+            redBlink();
         }
         document.getElementById('meaning').value="";//удаление значения из input
         getVars();
         end = Date.now() + 121000;
-        document.getElementById('equation_main').style.backgroundColor = '';
         event.preventDefault();//чтоб страница не перезагружалась
         }
     });
@@ -76,11 +72,24 @@ $(function(){
             document.getElementById('btn_press_id').textContent = "Старт";
             document.getElementById('abxc').textContent = "a+b*x=c";
             document.getElementById('meaning').disabled=true;
-            clearInterval(startTimer().countdown);
+            clearInterval(startTimer());
             return false;//чтоб страница не перезагружалась
         }
     });
 
+    function greenBlink(){//моргание зеленым
+        setTimeout(() =>
+            document.getElementById('equation_main').style.backgroundColor = '',
+            150
+        );
+    }
+
+    function redBlink(){//моргание красным
+        setTimeout(() =>
+            document.getElementById('equation_main').style.backgroundColor = '',
+            150
+        );
+    }
 
 function startTimer() {
     if (started == false) {//проверка запущенности таймера
